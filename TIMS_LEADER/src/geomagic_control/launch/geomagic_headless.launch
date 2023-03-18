@@ -1,0 +1,43 @@
+<launch>
+
+   <arg name="device_name" default="Default Device"/>
+   <arg name="prefix" default="Geomagic"/>
+   <param name="publish_rate" type="int" value="20" />
+   <param name="record" type="bool" value="False" />
+
+   <group ns="$(arg prefix)"> 
+	<!-- omni node publishes joint states on omni1_joint_states -->
+        <node name="$(arg prefix)" pkg="geomagic_control" type="device_node" output="screen">
+            <param name="device_name" type="str" value="$(arg device_name)"/>
+        </node>	
+	<!-- robot_description tells robot_state_publisher where to find the omni's urdf description -->
+        <param name="$(arg prefix)_robot_description" command="cat $(find geomagic_description)/urdf/geomagic.urdf" />
+
+	<!-- robot_state_publisher reads Geomagic_joint_states and publishes corresponding tfs -->
+        <node name="$(arg prefix)_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+	  <!--<remap from="joint_states" to="$(arg prefix)/joint_states" />-->
+	  <remap from="robot_description" to="$(arg prefix)_robot_description" />
+	</node>
+
+
+        <node name="$(arg prefix)_footpedal" pkg="geomagic_control" type="footpedal" output="screen"/>
+        
+        <node name="$(arg prefix)_ros2django" pkg = "geomagic_control" type="ros2django.py" output="screen"/> 
+        
+        <node name="$(arg prefix)_django2ros" pkg = "geomagic_control" type="django2ros.py" output="screen"/> 
+
+        <node name="$(arg prefix)_ubuntu_data_record" pkg = "geomagic_control" type="ubuntu_data_record.py" output="screen"/> 
+
+        <node name="$(arg prefix)_django_data_record" pkg = "geomagic_control" type="from_django_data_record.py" output="screen"/>  
+        
+
+        <node name="$(arg prefix)_force_pub" pkg = "geomagic_control" type="force_pub.py" output="screen"/> 
+
+        <node name="$(arg prefix)_rosserial" pkg = "rosserial_python" type = "serial_node.py" args="/dev/ttyACM1" output="screen"/>     
+
+        <!-- <node name="$(arg prefix)_trajectory_record" pkg = "geomagic_control" type="tra_record.py" output="screen"/>  -->
+        
+        <!-- <node name="$(arg prefix)_drawhere" pkg = "geomagic_control" type="draw_where.py" output="screen"/>  -->
+	</group>
+</launch>
+

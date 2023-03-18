@@ -1,0 +1,11 @@
+<launch>
+    <arg name="IP" />
+    <param name="serverIP" type="str" value="$(arg IP)" />
+    <node name="django_robot" pkg="micro_control_pkg" type="django_robot.py" output="screen"  />
+    <node name="micro_control" pkg="micro_control_pkg" type="micro_control.py" output="screen"  respawn="true"/>
+    <node name="robot_django" pkg="micro_control_pkg" type="robot_django.py" output="screen"/>
+   
+    <!-- <node name="tra_record" pkg="micro_control_pkg" type="tra_record.py" output="screen" />
+    <node name="windows_data_record" pkg="micro_control_pkg" type="windows_data_record.py" output="screen" respawn="true"/> 
+    <node name="from_django_data_record" pkg="micro_control_pkg" type="from_django_data_record.py" output="screen" respawn="true"/> -->
+</launch>

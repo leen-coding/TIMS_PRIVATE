@@ -1,0 +1,7 @@
+empy==3.3.4
+PyYAML==6.0
+rospkg==1.4.0
+catkin-pkg==0.5.2
+websocket-client==1.5.1
+numpy==1.24.2
+pyserial==3.5

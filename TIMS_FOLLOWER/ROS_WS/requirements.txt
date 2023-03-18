@@ -1,0 +1,5 @@
+conda create -n TIMS python=3.9
+pip install numpy==1.21.1
+pip install sensapex
+pip install websocket-client
+catkin_make -DPYTHON_EXECUTABLE=C:\Users\dianz\Anaconda3\envs\TIMS\python.exe
