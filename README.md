@@ -16,7 +16,8 @@ Plz note, in this tutorial, we deploy Django 'server' and leader ROS on one lapt
 ## File Description
 1. TIMS_DJANGO: Two django projects are included. LIVE_VIDEO is for receiving, storing and streaming live video from
 follower side. TIMS_SITE is the main site.
-2. TIMS_LEADER: Two ROS packages are included for leader robot controlling.
+2. TIMS_LEADER: Two ROS packages are included in *src* directory for leader robot controlling. An arduino code is provided for controlling WTD.
+3. TIMS_FOLLOWER: ROS_WS is the follower ros work space for controlling micro robot. Video streaming is for sending live video to django 'server'.
 
 ## Django 'server'
 **In the very beginning, a redis database should be installed, as we use it as the Django backend.**
@@ -45,7 +46,10 @@ python -m pip install channels_redis
 ```
 
 **The Django 'server' can be started through a shell script _server_start.sh_**. 
-
+Go to _TIMS_DJANGO_:
+```shell
+cd TIMS_DJANGO
+```
 Edit this shell script firstly:
 ```shell
 #This should be modified according to your anaconda path:
@@ -53,6 +57,7 @@ source ~/anaconda3/bin/activate TIMS
 ```
 run .sh in terminal by:
 ```shell
+
 ./server_start.sh
 ```
 Then go to <http://0.0.0.0:8000/chat/lobby> test if django sever is working. If you want to
@@ -60,7 +65,7 @@ access it from other device in local network, go to <http://server_IPv4_address:
 ![alt](./README_IMG/django_setup.png)
 
 ## Leader ROS
-### Config ROS env
+### Configure ROS env
 
 **Install ROS noetic according to <http://wiki.ros.org/noetic/Installation/Ubuntu>**
 
@@ -71,10 +76,14 @@ Also, we use Geomagic Touch in TIMS, install OpenHaptics Installer and Haptic de
 
 When the _box test_ for Geomagic Touch is passed, then move on to the next step.
 
+Go to _TIMS_LEADER_:
+```shell
+cd /TIMS_LEADER
+```
 **Install following python packages**
 ```shell
 #make sure you are in TIMS_LEADER.
-pip install requirement.txt
+pip install -r requirements.txt
 ```
 
 ### Build and Run Leader ROS
@@ -123,8 +132,10 @@ pip install websocket-client
 ```
 Go to TIMS_FOLLOWER\ROS_WS\, to build follower ROS packages.
 ```
-#Load environment variables for ROS, before that, plz quit viutual enviroment,
-#otherwise, there will be an error when execuate following commands.
+#Load environment variables for ROS, before that, plz quit all Command Prompt and open a new 
+x64 Native Tools Command Prompt for VS 2019, also, keep conda deactivate.
+#otherwise, there will be an error when execuate following commands. More specifically, conda cant be started
+before the following command, even though deactivating after activating.
 
 C:\opt\ros\noetic\x64\setup.bat
 
