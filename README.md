@@ -87,7 +87,8 @@ All topics and nodes are shown in the following rqt graph:
 To build a work space for these two packages, make sure you are in the Directory of _TIMS_LEADER_, 
 then execute following commend in terminal to **build ROS**:
 ```shell
-catkin_build
+conda activate TIMS
+catkin_make
 ```
 
 **Modify shell script** for quick start.
@@ -122,7 +123,13 @@ pip install websocket-client
 ```
 Go to TIMS_FOLLOWER\ROS_WS\, to build follower ROS packages.
 ```
-#use certain python in your conda env, for example:
+#Load environment variables for ROS, before that, plz quit viutual enviroment,
+#otherwise, there will be an error when execuate following commands.
+
+C:\opt\ros\noetic\x64\setup.bat
+
+#edit the following command according to your virtual env's path
+
 catkin_make -DPYTHON_EXECUTABLE=C:\Users\dianz\Anaconda3\envs\TIMS\python.exe
 ```
 Modify ros_start.bat for quick start
@@ -139,7 +146,9 @@ call .\devel\setup.bat
 #Launch ros and specify target django 'server' IP(IPv4 address), eg:
 call roslaunch micro_control_pkg launch.launch IP:=10.167.98.208
 ```
-Save and Double click ros_start.bat. Follower ROS start to run. Plz note, run Django sever before running follower ROS.
+
+
+Save and Double click ros_start.bat. Follower ROS starts to run. Plz note, run Django sever before running follower ROS.
 
 Open web page again, then you can see MICRO START button turns into blue, meaning run successfully.
 ![alt](./README_IMG/FollowerROS.png)
